@@ -58,14 +58,14 @@ func (s *MergeHotelDataService) MergeHotelDataForHotelList(hotelId string, suppl
 		if len(supplier.Description) > 0 && len(supplier.Description) > len(HotelResponse.Description) {
 			HotelResponse.Description = supplier.Description
 		}
-		if supplier.Images.Site != nil && len(supplier.Images.Site) > 0 && len(supplier.Images.Site) > len(HotelResponse.Images.Site) {
-			HotelResponse.Images.Site = supplier.Images.Site
+		if supplier.Images.Site != nil && len(supplier.Images.Site) > 0 {
+			HotelResponse.Images.Site = append(HotelResponse.Images.Site, supplier.Images.Site...)
 		}
-		if supplier.Images.Rooms != nil && len(supplier.Images.Rooms) > 0 && len(supplier.Images.Rooms) > len(HotelResponse.Images.Rooms) {
-			HotelResponse.Images.Rooms = supplier.Images.Rooms
+		if supplier.Images.Rooms != nil && len(supplier.Images.Rooms) > 0 {
+			HotelResponse.Images.Rooms = append(HotelResponse.Images.Rooms, supplier.Images.Rooms...)
 		}
 		if supplier.Images.Amenities != nil && len(supplier.Images.Amenities) > 0 && len(supplier.Images.Amenities) > len(HotelResponse.Images.Amenities) {
-			HotelResponse.Images.Amenities = supplier.Images.Amenities
+			HotelResponse.Images.Amenities = append(HotelResponse.Images.Amenities, supplier.Images.Amenities...)
 		}
 		if supplier.BookingConditions != nil && len(supplier.BookingConditions) > 0 && len(supplier.BookingConditions) > len(HotelResponse.BookingConditions) {
 			HotelResponse.BookingConditions = supplier.BookingConditions
@@ -74,10 +74,12 @@ func (s *MergeHotelDataService) MergeHotelDataForHotelList(hotelId string, suppl
 	amenitiesArray := append(HotelResponse.Amenities.Rooms, HotelResponse.Amenities.General...)
 	var generalArray, roomsArray []string
 	for i := 0; i < len(amenitiesArray); i++ {
-		if _, ok := s.Config.AmenitiesConfig.General[strings.Trim(amenitiesArray[i], "")]; ok {
-			generalArray = append(generalArray, s.Config.AmenitiesConfig.General[strings.Trim(amenitiesArray[i], "")])
-		} else if _, ok := s.Config.AmenitiesConfig.Rooms[strings.Trim(amenitiesArray[i], "")]; ok {
-			roomsArray = append(roomsArray, s.Config.AmenitiesConfig.Rooms[strings.Trim(amenitiesArray[i], "")])
+		if _, ok := s.Config.AmenitiesConfig.General[strings.ToLower(strings.Trim(amenitiesArray[i], " "))]; ok {
+			generalArray = append(generalArray, s.Config.AmenitiesConfig.General[strings.ToLower(strings.Trim(amenitiesArray[i], " "))])
+		} else if _, ok := s.Config.AmenitiesConfig.Rooms[strings.ToLower(strings.Trim(amenitiesArray[i], " "))]; ok {
+			roomsArray = append(roomsArray, s.Config.AmenitiesConfig.Rooms[strings.ToLower(strings.Trim(amenitiesArray[i], " "))])
+		} else {
+			generalArray = append(generalArray, strings.ToLower(strings.Trim(amenitiesArray[i], " ")))
 		}
 	}
 	roomsArray = removeDuplicates(roomsArray)
