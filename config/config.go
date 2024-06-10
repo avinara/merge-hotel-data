@@ -22,7 +22,6 @@ type SupplierConfig struct {
 	ResponseFormat map[string]string `json:"response_format"`
 }
 
-// LoadConfig loads the configuration from a JSON file
 func LoadConfig(filename string) (*Config, error) {
 	file, err := os.Open(filename)
 	if err != nil {
