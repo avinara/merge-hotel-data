@@ -137,7 +137,9 @@ The merged response from all the suppliers would look like below:
 ```
 
 `name` - the name of the supplier
+
 `source` - url from where the data can be fetched
+
 `response_format` - response_format is to map the supplier source params to our desired params
 
 We would be able to map the supplier response params to the params desired for our data merging.
@@ -149,15 +151,15 @@ At the end of the procurement phase, we would have multiple supplier data follow
 Here, we would have data in a common format across multiple suppliers.
 I have used the following logic to merge the data
 
-1. id - no logic
-2. destination_id - no logic
-3. name - the name with the longest length among the suppliers was chosen
-4. description - the description with the longest length among the suppliers was chosen
-5. lat - any supplier with a latitude param was chosen, if none had it the result will be 0
-6. lng - any supplier with a longitude param was chosen, if none had it the result will be 0
-7. address - the address param with the longest length among the suppliers was chosen
-8. city - the city param with the longest length among the suppliers was chosen
-9. country - the country param with the longest length among the suppliers was chosen
-10. amenities - this was split into two. general and rooms. we have defined a map lookup in the config.json for general and room amenities. The data procured is looked up in the config and segregated to the corresponding bucket.
-11. images - all three buckets (site, amenities, room) were procured , merged and presented
-12. boooking_conditions - the boooking_conditions param with the longest length among the suppliers was chosen
+1. `id` - no logic
+2. `destination_id` - no logic
+3. `name` - the name with the longest length among the suppliers was chosen
+4. `description` - the description with the longest length among the suppliers was chosen
+5. `lat` - any supplier with a latitude param was chosen, if none had it the result will be 0
+6. `lng` - any supplier with a longitude param was chosen, if none had it the result will be 0
+7. `address` - the address param with the longest length among the suppliers was chosen
+8. `city` - the city param with the longest length among the suppliers was chosen
+9. `country` - the country param with the longest length among the suppliers was chosen
+10. `amenities` - this was split into two. general and rooms. we have defined a map lookup in the config.json for general and room amenities. The data procured is looked up in the config and segregated to the corresponding bucket.
+11. `images` - all three buckets (site, amenities, room) were procured , merged and presented
+12. `boooking_conditions` - the boooking_conditions param with the longest length among the suppliers was chosen
