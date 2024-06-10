@@ -3,7 +3,10 @@ package controllers
 import (
 	"encoding/json"
 	"net/http"
+	"strconv"
+	"strings"
 
+	"github.com/merge-hotel-data/model"
 	"github.com/merge-hotel-data/services"
 	"github.com/merge-hotel-data/utils"
 )
@@ -24,28 +27,46 @@ func NewMergeHotelDataController(MergeHotelDataService services.MergeHotelDataSe
 	}
 }
 
-// @Summary Get Hotels
-// @Description Get Hotels
-// @Tags Hotels
-// @Produce json
-// @Success 200 {array} model.Hotel
-// @Failure 500 {object} model.ErrorResponse
-// @Router /hotels [get]
 func (m *MergeHotelDataController) GetHotelData(w http.ResponseWriter, r *http.Request) {
 
 	searchStr := r.URL.Query().Get("searchStr")
 	searchValue := r.URL.Query().Get("searchValue")
-	supplierData, err := m.SupplierService.GetSupplierData(searchStr, searchValue)
+	var hotels []model.SupplierData
 
-	if err != nil {
-		utils.WriteErrorWithMessage(w, utils.FormErrorMessage(err))
-		return
-	}
-	hotels, err := m.MergeHotelDataService.MergeHotelData(supplierData)
+	if searchStr == "id" {
+		searchValues := strings.Split(searchValue, ",")
 
-	if err != nil || hotels == nil {
-		utils.WriteErrorWithMessage(w, utils.FormErrorMessage(err))
-		return
+		for _, searchString := range searchValues {
+			supplierData, err := m.SupplierService.GetSupplierData(searchStr, searchString)
+
+			if err != nil {
+				utils.WriteErrorWithMessage(w, utils.FormErrorMessage(err))
+				return
+			}
+			hotel := m.MergeHotelDataService.MergeHotelDataForHotelList(searchString, supplierData)
+
+			if hotel == nil {
+				utils.WriteErrorWithMessage(w, utils.FormErrorMessage(err))
+				return
+			}
+			hotels = append(hotels, *hotel)
+		}
 	}
-	json.NewEncoder(w)
+
+	if searchStr == "destination_id" {
+		supplierData, err := m.SupplierService.GetSupplierData(searchStr, searchValue)
+
+		if err != nil {
+			utils.WriteErrorWithMessage(w, utils.FormErrorMessage(err))
+			return
+		}
+		destinationId, _ := strconv.ParseFloat(searchValue, 64)
+		hotels = m.MergeHotelDataService.MergeHotelDataForDestinationId(&destinationId, supplierData)
+
+		if hotels == nil {
+			utils.WriteErrorWithMessage(w, utils.FormErrorMessage(err))
+			return
+		}
+	}
+	json.NewEncoder(w).Encode(hotels)
 }

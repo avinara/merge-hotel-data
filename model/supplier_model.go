@@ -1,36 +1,36 @@
 package model
 
 type SupplierData struct {
-	Id                string
-	DestinationId     float64
-	Name              string
-	Location          HotelLocation
-	Description       string
-	Amenities         HotelAmenities
-	Images            HotelImages
-	BookingConditions []string
+	Id                string         `json:"id"`
+	DestinationId     float64        `json:"destination_id"`
+	Name              string         `json:"name"`
+	Location          HotelLocation  `json:"location"`
+	Description       string         `json:"description"`
+	Amenities         HotelAmenities `json:"amenities"`
+	Images            HotelImages    `json:"images"`
+	BookingConditions []string       `json:"booking_conditions"`
 }
 
 type HotelLocation struct {
-	Latitude  float64
-	Longitude float64
-	Address   string
-	City      string
-	Country   string
+	Latitude  float64 `json:"lat"`
+	Longitude float64 `json:"lng"`
+	Address   string  `json:"address"`
+	City      string  `json:"city"`
+	Country   string  `json:"country"`
 }
 
 type HotelAmenities struct {
-	General []string
-	Rooms   []string
+	General []string `json:"general"`
+	Rooms   []string `json:"rooms"`
 }
 
 type HotelImages struct {
-	Rooms     []ImageTemplate
-	Site      []ImageTemplate
-	Amenities []ImageTemplate
+	Rooms     []ImageTemplate `json:"rooms"`
+	Site      []ImageTemplate `json:"site"`
+	Amenities []ImageTemplate `json:"amenities"`
 }
 
 type ImageTemplate struct {
-	Link        string
-	Description string
+	Link        string `json:"link"`
+	Description string `json:"description"`
 }

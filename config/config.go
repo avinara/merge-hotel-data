@@ -8,20 +8,18 @@ import (
 
 // Config struct represents the configuration
 type Config struct {
-	SupplierConfig []SupplierConfig `json:"supplier_config"`
-	SwaggerConfig  SwaggerConfig    `json:"swagger_config"`
+	SupplierConfig  []SupplierConfig `json:"supplier_config"`
+	AmenitiesConfig AmenitiesConfig  `json:"amenities_config"`
 }
 
+type AmenitiesConfig struct {
+	General map[string]string `json:"general"`
+	Rooms   map[string]string `json:"rooms"`
+}
 type SupplierConfig struct {
 	Source         string            `json:"source"`
 	Name           string            `json:"name"`
 	ResponseFormat map[string]string `json:"response_format"`
-}
-
-type SwaggerConfig struct {
-	SwaggerHost     string `json:"swagger_host"`
-	SwaggerVersion  string `json:"swagger_version"`
-	SwaggerBasePath string `json:"swagger_base_path"`
 }
 
 // LoadConfig loads the configuration from a JSON file

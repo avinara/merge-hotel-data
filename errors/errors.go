@@ -36,3 +36,19 @@ func InternalServerError() ErrorInterface {
 func LoadingConfigurationFileError() ErrorInterface {
 	return New(constants.LoadingConfigurationFileErrorCode, constants.LoadingConfigurationFileError)
 }
+
+func UnableToGetTheSupplierDataError() ErrorInterface {
+	return New(constants.UnableToGetTheSupplierDataErrorCode, constants.UnableToGetTheSupplierDataError)
+}
+
+func UnableToReadTheSupplierDataError() ErrorInterface {
+	return New(constants.LUnableToReadTheSupplierDataErrorCode, constants.UnableToReadTheSupplierDataError)
+}
+
+func UnableToDecodeTheSupplierDataError() ErrorInterface {
+	return New(constants.UnableToDecodeTheSupplierDataErrorCode, constants.UnableToDecodeTheSupplierDataError)
+}
+
+func StatusCodeMismatchError() ErrorInterface {
+	return New(constants.StatusCodeMismatchErrorCode, constants.StatusCodeMismatchError)
+}

@@ -30,23 +30,23 @@ func (s *SupplierService) GetSupplierData(searchStr string, searchValue string) 
 		source := supplier.Source
 		resp, err := http.Get(source)
 		if err != nil {
-			return nil, nil
+			return nil, errors.UnableToGetTheSupplierDataError()
 		}
 		defer resp.Body.Close()
 
 		body, err := io.ReadAll(resp.Body)
 		if err != nil {
-			return nil, nil
+			return nil, errors.UnableToReadTheSupplierDataError()
 		}
 
 		if resp.StatusCode != http.StatusOK {
-			return nil, nil
+			return nil, errors.StatusCodeMismatchError()
 		}
 
 		var supplierAPIResponse []map[string]interface{}
 		err = json.Unmarshal(body, &supplierAPIResponse)
 		if err != nil {
-			return nil, nil
+			return nil, errors.UnableToDecodeTheSupplierDataError()
 		}
 
 		for _, m := range supplierAPIResponse {
@@ -71,6 +71,10 @@ func (s *SupplierService) GetSupplierData(searchStr string, searchValue string) 
 						supplierData.Description = value.(string)
 					case supplier.ResponseFormat["address"]:
 						supplierData.Location.Address = value.(string)
+					case supplier.ResponseFormat["location.address"]:
+						addressMap := value.(map[string]interface{})
+						supplierData.Location.Address = addressMap["address"].(string)
+						supplierData.Location.Country = addressMap["country"].(string)
 					case supplier.ResponseFormat["city"]:
 						supplierData.Location.City = value.(string)
 					case supplier.ResponseFormat["country"]:
@@ -78,20 +82,17 @@ func (s *SupplierService) GetSupplierData(searchStr string, searchValue string) 
 					case supplier.ResponseFormat["amenities"]:
 						supplierData.Amenities.General = interfaceSliceToStringSlice(value.([]interface{}))
 					case supplier.ResponseFormat["amenities.general"]:
-						general := getAmenitiesDataFromArrayOfMaps(value.(map[string]interface{}), "general")
+						general := getDataFromArrayOfStrings(value.(map[string]interface{}), "general")
 						supplierData.Amenities.General = general
-					case supplier.ResponseFormat["amenities.rooms"]:
-						rooms := getAmenitiesDataFromArrayOfMaps(value.(map[string]interface{}), "rooms")
+						rooms := getDataFromArrayOfStrings(value.(map[string]interface{}), "room")
 						supplierData.Amenities.Rooms = rooms
-					case supplier.ResponseFormat["images.amenities"]:
+					case supplier.ResponseFormat["images"]:
 						amenities := getImageDataFromArrayOfMaps(value.(map[string]interface{}), "amenities")
 						supplierData.Images.Amenities = amenities
-					case supplier.ResponseFormat["images.site"]:
 						site := getImageDataFromArrayOfMaps(value.(map[string]interface{}), "site")
-						supplierData.Images.Amenities = site
-					case supplier.ResponseFormat["images.rooms"]:
+						supplierData.Images.Site = site
 						rooms := getImageDataFromArrayOfMaps(value.(map[string]interface{}), "rooms")
-						supplierData.Images.Amenities = rooms
+						supplierData.Images.Rooms = rooms
 					case supplier.ResponseFormat["booking_conditions"]:
 						supplierData.BookingConditions = interfaceSliceToStringSlice(value.([]interface{}))
 					}
@@ -112,7 +113,7 @@ func (s *SupplierService) GetSupplierData(searchStr string, searchValue string) 
 	return supplierDataArray, nil
 }
 
-func getAmenitiesDataFromArrayOfMaps(value map[string]interface{}, searchString string) []string {
+func getDataFromArrayOfStrings(value map[string]interface{}, searchString string) []string {
 	temp := value[searchString]
 	tempo := temp.([]interface{})
 	var result []string
@@ -124,6 +125,9 @@ func getAmenitiesDataFromArrayOfMaps(value map[string]interface{}, searchString 
 
 func getImageDataFromArrayOfMaps(value map[string]interface{}, searchString string) []model.ImageTemplate {
 	temp := value[searchString]
+	if temp == nil {
+		return nil
+	}
 	tempo := temp.([]interface{})
 	var imageArray []model.ImageTemplate
 	for _, x := range tempo {

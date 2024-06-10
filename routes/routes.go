@@ -5,7 +5,6 @@ import (
 
 	"github.com/go-chi/chi"
 	"github.com/merge-hotel-data/controllers"
-	httpSwagger "github.com/swaggo/http-swagger"
 )
 
 type RouterInterface interface {
@@ -35,8 +34,6 @@ func (h *router) InitRoutes(mergeHotelDataController *controllers.MergeHotelData
 		r.Get("/hotels", mergeHotelDataController.GetHotelData)
 
 	})
-
-	h.mux.With(RemoveContextTypeJSON).Get("/swagger/*", httpSwagger.WrapHandler)
 }
 
 func RemoveContextTypeJSON(next http.Handler) http.Handler {

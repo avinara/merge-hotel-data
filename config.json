@@ -1,9 +1,4 @@
 {
-    "swagger_config": {
-        "swagger_host": "localhost",
-        "swagger_version": "2.0",
-        "swagger_base_path": "/"
-    },
     "supplier_config": [
         {
             "name": "acme",
@@ -34,9 +29,7 @@
                 "address": "address",
                 "description": "info",
                 "amenities": "amenities",
-                "images.rooms": "images",
-                "images.amenities": "images",
-                "booking_conditions": "booking_conditions"
+                "images": "images"
             }
         },
         {
@@ -45,16 +38,48 @@
             "response_format": {
                 "id": "hotel_id",
                 "destination_id": "destination_id",
-                "address": "location.address",
-                "country": "location.country",
+                "location.address": "location",
                 "name": "hotel_name",
                 "description": "details",
                 "amenities.general": "amenities",
-                "amenities.room": "amenities",
-                "images.rooms": "images",
-                "images.site": "images"
+                "images": "images",
+                "booking_conditions": "booking_conditions"
             }
         }     
-    ]
+    ],
+    "amenities_config": {
+        "general" : {
+            "Pool": "pool",
+            "WiFi": "wifi",
+            "wifi": "wifi",
+            "BusinessCenter": "business center",
+            "business center": "business center",
+            "Breakfast": "breakfast",
+            "breakfast": "breakfast",
+            "Bar": "bar",
+            "bar": "bar",
+            "DryCleaning": "dry cleaning",
+            "outdoor pool": "pool",
+            "childcare": "childcare",
+            "concierge": "concierge",
+            "parking":"parking"
+        },
+        "rooms" : {
+            "TV": "tv",
+            "tv": "tv",
+            "Aircon":"aircon",
+            "aircon": "aircon",
+            "minibar": "minibar",
+            "DryCleaning": "dry cleaning",
+            "BathTub": "bathtub",
+            "Tub": "bathtub",
+            "Hair dryer": "hair dryer",
+            "Iron":"iron",
+            "iron":"iron",
+            "Kettle":"kettle",
+            "Coffee machine":"coffee machine",
+            "indoor pool": "indoor pool"
+        }
+    }
        
 }
