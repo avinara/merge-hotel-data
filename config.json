@@ -1,0 +1,60 @@
+{
+    "swagger_config": {
+        "swagger_host": "localhost",
+        "swagger_version": "2.0",
+        "swagger_base_path": "/"
+    },
+    "supplier_config": [
+        {
+            "name": "acme",
+            "source": "https://5f2be0b4ffc88500167b85a0.mockapi.io/suppliers/acme",
+            "response_format": {
+                "id": "Id",
+                "destination_id": "DestinationId",
+                "name": "Name",
+                "lat": "Latitude",
+                "lng": "Longitude",
+                "address": "Address",
+                "city": "City",
+                "country": "Country",
+                "postal_code": "PostalCode",
+                "description": "Description",
+                "amenities": "Facilities"
+            }
+        },
+        {
+            "name": "patagonia",
+            "source": "https://5f2be0b4ffc88500167b85a0.mockapi.io/suppliers/patagonia",
+            "response_format": {
+                "id": "id",
+                "destination_id": "destination",
+                "name": "name",
+                "lat": "lat",
+                "lng": "lng",
+                "address": "address",
+                "description": "info",
+                "amenities": "amenities",
+                "images.rooms": "images",
+                "images.amenities": "images",
+                "booking_conditions": "booking_conditions"
+            }
+        },
+        {
+            "name": "paperflies",
+            "source": "https://5f2be0b4ffc88500167b85a0.mockapi.io/suppliers/paperflies",
+            "response_format": {
+                "id": "hotel_id",
+                "destination_id": "destination_id",
+                "address": "location.address",
+                "country": "location.country",
+                "name": "hotel_name",
+                "description": "details",
+                "amenities.general": "amenities",
+                "amenities.room": "amenities",
+                "images.rooms": "images",
+                "images.site": "images"
+            }
+        }     
+    ]
+       
+}
