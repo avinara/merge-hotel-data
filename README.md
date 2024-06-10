@@ -2,7 +2,7 @@
 
 This project merges hotel data from multiple suppliers, cleans it, and delivers it via an API endpoint.
 
-## Getting Started
+### Getting Started
 
 Follow these instructions to set up and run the project on your local machine.
 
@@ -14,7 +14,8 @@ Follow these instructions to set up and run the project on your local machine.
 
 1. **Clone the repository**:
 
-   ```git clone https://github.com/avinara/merge-hotel-data.git\ncd merge-hotel-data```
+   ```git clone https://github.com/avinara/merge-hotel-data.git
+      cd merge-hotel-data```
 
 2. **Make sure Docker Desktop is running**:
 
@@ -22,20 +23,26 @@ Follow these instructions to set up and run the project on your local machine.
 
 3. **Navigate to the project directory**:
 
-```cd merge-hotel-data```
+            ```cd merge-hotel-data```
 
 4. **Build the Docker image**:
 
-```docker-compose build```
+            ```docker-compose build```
 
 5.**Run the application**:
 
-
-```docker-compose up```
+            ```docker-compose up```
 
 ### Usage
 Once the application is running, you can access the API at http://localhost:8080.
 
 ### API Endpoints
-```localhost:8080/hotels?searchStr=destination_id&searchValue=1122```
-```localhost:8080/hotels?searchStr=id&searchValue=f8c9,iJhz```
+            ```localhost:8080/hotels?searchStr=destination_id&searchValue=1122``` 
+
+            ```localhost:8080/hotels?searchStr=id&searchValue=f8c9,iJhz```
+
+### Query Params
+
+    `searchStr =  "id" , searchValue =  "f8c9,iJhz" `
+
+    `searchStr =  "destination_id", searchValue = "1122"`
