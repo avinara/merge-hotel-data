@@ -163,3 +163,15 @@ I have used the following logic to merge the data
 10. `amenities` - this was split into two. general and rooms. we have defined a map lookup in the config.json for general and room amenities. The data procured is looked up in the config and segregated to the corresponding bucket.
 11. `images` - all three buckets (site, amenities, room) were procured , merged and presented
 12. `boooking_conditions` - the boooking_conditions param with the longest length among the suppliers was chosen
+
+
+### Performance Optimization Scope
+
+1. Cache
+The API performance can be brought up by implementing a caching strategy.
+
+2. Pagination
+As the dataset grows, there is a high chance that the API performance will deterioriate hence paginating the response will be helpful
+
+3. Rate Limiting
+The API can be exposed through an API Gateway. This can facilitate features like IP whitelisting, Rate limiting and DDOS attack prevention. This could prevent the API to be used by the right personnel. 
